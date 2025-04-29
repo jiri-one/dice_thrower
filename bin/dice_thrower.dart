@@ -62,21 +62,24 @@ List<int> inputChecker(List<String> arguments) {
   return diceList;
 }
 
-void randomizer(List<int> diceList) {
+List<int> randomizer(List<int> diceList) {
   // if we reach here, then we have valid arguments
   Random random = Random();
+  List<int> dicesValueList = [];
   for (int dice in diceList) {
     int randomNumber = random.nextInt(dice) + 1;
     print('Rolling a $dice sided die: $randomNumber');
+    dicesValueList.add(randomNumber);
   }
+  return dicesValueList;
 }
 
-void diceThrower(List<String> arguments) {
+List<int> diceThrower(List<String> arguments) {
   // check if arguments are integers
   final List<int> diceList = inputChecker(arguments);
   if (diceList.isEmpty) {
-    return;
+    return diceList;
   }
   // if we reach here, then we have valid arguments
-  randomizer(diceList);
+  return randomizer(diceList);
 }

@@ -1,4 +1,4 @@
-import '../bin/dice_thrower.dart' show inputChecker, randomizer;
+import 'package:dice_thrower/dice_thrower.dart' show inputChecker, randomizer;
 import 'package:test/test.dart';
 
 void main() {
@@ -15,21 +15,14 @@ void main() {
     final zeroExpected = [];
     final dices = inputChecker(["2", "3", "20"]);
     final dicesExpected = [2, 3, 20];
-    final results = [
-      intInString,
-      string,
-      empty,
-      negative,
-      zero,
-      dices
-    ];
+    final results = [intInString, string, empty, negative, zero, dices];
     final expectedResults = [
       intInStringExpected,
       stringExpected,
       emptyExpected,
       negativeExpected,
       zeroExpected,
-      dicesExpected
+      dicesExpected,
     ];
     // check if all results are equal to expected results
     for (int i = 0; i < results.length; i++) {

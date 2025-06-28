@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'dart:math' show Random;
 
 List<int> inputChecker(List<String> arguments) {
@@ -6,9 +5,8 @@ List<int> inputChecker(List<String> arguments) {
   for (var dice in arguments) {
     // check if dice is a number
     if (int.tryParse(dice) == null) {
-      stdout.writeln('Invalid argument: $dice');
-      stdout.writeln('Please provide a list of integers.');
-      exitCode = 1;
+      print('Invalid argument: $dice');
+      print('Please provide a list of integers.');
       return [];
     }
   }
@@ -18,9 +16,8 @@ List<int> inputChecker(List<String> arguments) {
   for (int dice in diceList) {
     // check if dice is greater than 1
     if (dice <= 1) {
-      stdout.writeln('Invalid argument: $dice');
-      stdout.writeln('Please provide a list of integers greater than 1.');
-      exitCode = 1;
+      print('Invalid argument: $dice');
+      print('Please provide a list of integers greater than 1.');
       return [];
     }
   }
@@ -33,7 +30,7 @@ List<int> randomizer(List<int> diceList) {
   List<int> dicesValueList = [];
   for (int dice in diceList) {
     int randomNumber = random.nextInt(dice) + 1;
-    stdout.writeln('\n Rolling a $dice sided die: $randomNumber');
+    print('\n Rolling a $dice sided die: $randomNumber');
     dicesValueList.add(randomNumber);
   }
   return dicesValueList;

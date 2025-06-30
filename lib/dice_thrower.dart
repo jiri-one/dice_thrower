@@ -1,5 +1,7 @@
 import 'dart:math' show Random;
 
+Random random = Random();
+
 List<int> inputChecker(List<String> arguments) {
   // check if arguments are integers
   for (var dice in arguments) {
@@ -24,23 +26,42 @@ List<int> inputChecker(List<String> arguments) {
   return diceList;
 }
 
-List<int> randomizer(List<int> diceList) {
+Future<int> oneDiceThrower(int dice) async {
+  int randomNumber = random.nextInt(dice) + 1;
+  print('\n Rolling a $dice sided die: $randomNumber');
+  return randomNumber;
+}
+
+Future<List<int>> randomizer(List<int> diceList) async {
   // if we reach here, then we have valid arguments
-  Random random = Random();
   List<int> dicesValueList = [];
-  for (int dice in diceList) {
-    int randomNumber = random.nextInt(dice) + 1;
-    print('\n Rolling a $dice sided die: $randomNumber');
-    dicesValueList.add(randomNumber);
-  }
+  // one possibility is to use a stream to iterate over the diceList
+  // and call the oneDiceThrower function for each dice
+
+  // Stream<int> stream = Stream.fromIterable(diceList);
+  // await for (int dice in stream) {
+  //   int rolledNumber = await oneDiceThrower(dice);
+  //   print('\n Rolling a $dice sided die: $rolledNumber');
+  //   dicesValueList.add(rolledNumber);
+  // }
+
+  // but we can also use Future.wait to call the oneDiceThrower function for each dice
+  // and wait for all the futures to complete
+  await Future.wait(
+    diceList.map((int dice) async {
+      int rolledNumber = await oneDiceThrower(dice);
+      dicesValueList.add(rolledNumber);
+    }),
+  );
+  // return the list of random dice values
   return dicesValueList;
 }
 
-List<int> diceThrower(List<String> arguments) {
+Future<List<int>> diceThrower(List<String> arguments) async {
   // check if arguments are integers
   final List<int> diceList = inputChecker(arguments);
   if (diceList.isEmpty) {
-    return diceList;
+    return diceList; // return empty list if input is invalid
   }
   // if we reach here, then we have valid arguments
   return randomizer(diceList);
